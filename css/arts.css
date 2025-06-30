@@ -1,0 +1,172 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1e1e1e;
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Navigation */
+.nav-glass {
+  margin: 20px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(190, 79, 95, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(190, 79, 95, 0.4);
+  width: 90%;
+  max-width: 800px;
+}
+
+/* Navigation list */
+.nav-glass ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Navigation links */
+.nav-glass a {
+  text-decoration: none;
+  font-size: 0.75em;
+  color: #BE4F5F;
+  transition: color 0.3s ease;
+}
+.nav-glass a:hover {
+  color: #fff;
+}
+
+/* Carousel Container */
+.gallery-container {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+
+  /* Liquid glass effect */
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  padding: 20px;
+}
+
+/* Carousel Wrapper */
+.carousel-wrapper {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 15px;
+}
+
+/* Carousel Strip */
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+/* Carousel Images */
+.carousel img {
+  min-width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: filter 0.5s ease, transform 0.5s ease;
+  cursor: pointer;
+}
+
+/* Arrows */
+.arrow {
+  background: rgba(190, 79, 95, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+.arrow:hover {
+  background: rgba(255,255,255,0.3);
+  color: #BE4F5F;
+}
+
+/* Blurring inactive images */
+.carousel img:not(.active) {
+  filter: blur(4px) brightness(0.7);
+  transform: scale(0.95);
+}
+.carousel img.active {
+  filter: none;
+  transform: scale(1);
+}
+
+/* Lightbox Overlay */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+/* Lightbox visible state */
+.lightbox.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: all;
+}
+
+/* Lightbox image */
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+
+/* Close button */
+.lightbox .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2em;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .carousel img {
+    height: 250px;
+  }
+}

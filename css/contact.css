@@ -1,0 +1,119 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1e1e1e;
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Navigation Glassmorphism */
+.nav-glass {
+  margin: 20px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(190, 79, 95, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(190, 79, 95, 0.4);
+  width: 90%;
+  max-width: 800px;
+}
+
+.nav-glass ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav-glass a {
+  text-decoration: none;
+  font-size: 0.75em;
+  color: #BE4F5F;
+  transition: color 0.3s ease;
+}
+.nav-glass a:hover {
+  color: #fff;
+}
+
+/* Contact Container */
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  width: 90%;
+}
+
+/* Contact Box with Liquid Glass */
+.contact-box {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.contact-box h2 {
+  font-size: 0.75em;
+  margin-bottom: 20px;
+}
+
+/* Contact Links */
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Contact Item with Glass Button */
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(190, 79, 95, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 12px;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Contact Item Icon */
+.contact-item img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .contact-box {
+    padding: 20px;
+  }
+  .contact-item span {
+    font-size: 0.6em;
+  }
+}

@@ -1,0 +1,125 @@
+/* Reset and base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #141414, #1e1e1e);
+  font-family: 'Press Start 2P', cursive;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+}
+
+/* Navigation */
+.nav-glass {
+  display: flex;
+  justify-content: center;
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 20px;
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.nav-glass ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-glass a {
+  color: #BE4F5F;
+  text-decoration: none;
+  font-size: 0.75em;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.nav-glass a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Glass container */
+.glass-box {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 25px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 800px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+/* Typing */
+.typing-container {
+  font-size: 1.2em;
+  color: #BE4F5F;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Profile image */
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  margin: 15px auto;
+  display: block;
+}
+
+/* Skills */
+.skills .progress-bar {
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.skills .progress {
+  height: 12px;
+  background: linear-gradient(90deg, #BE4F5F, #FF7F50);
+  width: 0; /* You set it inline in HTML */
+  transition: width 1s ease;
+}
+
+/* Optional button styles (if you want them) */
+.glass-box button {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.glass-box button:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
