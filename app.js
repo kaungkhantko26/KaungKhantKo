@@ -1,344 +1,369 @@
-/* ==========================================================
-   B3 HYBRID SUPER AI — FULL DOCTOR SYSTEM
-   Includes:
-   ✔ Full medical database
-   ✔ Symptom Extraction AI
-   ✔ Symptom Vectorizer
-   ✔ Similarity Matching Engine
-   ✔ Neural Network Classifier (TF.js)
-   ✔ Severity Analyzer
-   ✔ Doctor-like Output Generator
-   ========================================================== */
-
-
-// ==========================================================
-//                1) MEDICAL DATABASE
-// ==========================================================
+// ==========================
+// 1) YOUR MEDICAL DATABASE
+// ==========================
 
 const medicalDB = {
-    "cardiology": {
-        "hypertension": {
-            "description": "Long-term high blood pressure causing strain on organs.",
-            "symptoms": ["headache", "dizziness", "fatigue"],
-            "investigations": ["BP", "ECG"],
-            "treatment": ["ACE inhibitors", "diet"]
-        },
-        "myocardial_infarction": {
-            "description": "Sudden blockage of coronary artery leading to heart attack.",
-            "symptoms": ["chest pain", "sweating", "shortness of breath", "nausea"],
-            "investigations": ["ECG", "troponin"],
-            "treatment": ["PCI", "aspirin"]
-        },
-        "heart_failure": {
-            "description": "Weak heart pumping leading to fluid accumulation.",
-            "symptoms": ["breathlessness", "swelling", "fatigue"],
-            "investigations": ["BNP", "echocardiogram"],
-            "treatment": ["diuretics", "ACE inhibitors"]
-        }
-    },
 
-    "respiratory": {
-        "asthma": {
-            "description": "Inflammation and narrowing of airways.",
-            "symptoms": ["wheeze", "shortness of breath", "chest tightness", "cough"],
-            "investigations": ["spirometry"],
-            "treatment": ["inhalers"]
-        },
-        "pneumonia": {
-            "description": "Lung infection often bacterial/viral.",
-            "symptoms": ["fever", "cough", "breathlessness"],
-            "investigations": ["CXR"],
-            "treatment": ["antibiotics"]
-        }
+    "symptoms_core": {
+      "fever": {
+        "causes": ["infection", "inflammation", "malignancy", "drug reaction"],
+        "red_flags": ["altered mental status", "neck stiffness", "low blood pressure", "persistent fever > 5 days"],
+        "notes": "Fever indicates cytokine release and hypothalamic set-point change."
+      },
+      "headache": {
+        "causes": ["tension headache", "migraine", "meningitis", "subarachnoid hemorrhage"],
+        "red_flags": ["worst ever headache", "photophobia", "sudden onset", "seizure"]
+      },
+      "chest_pain": {
+        "causes": ["MI", "pneumonia", "pulmonary embolism", "reflux disease"],
+        "red_flags": ["radiation to left arm", "sweating", "fainting"]
+      },
+      "cough": {
+        "causes": ["viral infection", "pneumonia", "asthma", "COPD"],
+        "red_flags": ["blood in sputum", "severe breathlessness"]
+      }
     },
-
-    "gastroenterology": {
-        "gerd": {
-            "description": "Acid reflux causing burning chest pain.",
-            "symptoms": ["heartburn", "acid taste", "chest discomfort"],
-            "investigations": ["endoscopy if needed"],
-            "treatment": ["PPIs"]
-        },
-        "peptic_ulcer": {
-            "description": "Ulcer in stomach or duodenum.",
-            "symptoms": ["burning stomach pain", "nausea"],
-            "investigations": ["endoscopy"],
-            "treatment": ["PPIs", "H. pylori therapy"]
-        }
+  
+    "immunology_core": {
+      "allergy": {
+        "mechanism": "IgE-mediated hypersensitivity",
+        "examples": ["asthma", "anaphylaxis", "hay fever"]
+      },
+      "autoimmune": {
+        "mechanism": "Loss of self-tolerance",
+        "examples": ["type 1 diabetes", "SLE", "RA"]
+      }
     },
-
+  
+    "oncology_core": {
+      "cancer_red_flags": [
+        "unexplained weight loss",
+        "night sweats",
+        "bleeding",
+        "mass present > 4 weeks"
+      ]
+    },
+  
+    "pain_types": {
+      "nociceptive": "Due to tissue injury.",
+      "neuropathic": "Due to nerve injury.",
+      "mixed": "Combination of both."
+    },
+  
+    "emergencies": {
+      "sepsis": {
+        "description": "Life-threatening organ dysfunction due to infection.",
+        "symptoms": ["fever", "low BP", "confusion"],
+        "investigations": ["blood tests", "lactate", "cultures"],
+        "treatment": ["IV fluids", "antibiotics", "oxygen"]
+      },
+      "anaphylaxis": {
+        "description": "Severe allergic reaction.",
+        "symptoms": ["wheezing", "swelling", "rash"],
+        "investigations": ["clinical"],
+        "treatment": ["IM adrenaline", "IV fluids", "oxygen"]
+      },
+      "acute_asthma": {
+        "description": "Severe asthma attack.",
+        "symptoms": ["wheeze", "breathlessness"],
+        "investigations": ["PEFR"],
+        "treatment": ["nebulized bronchodilators", "steroids"]
+      },
+      "shock": {
+        "types": ["hypovolemic", "cardiogenic", "septic", "anaphylactic"],
+        "common_signs": ["tachycardia", "low BP", "poor perfusion"]
+      }
+    },
+  
+    "poisoning": {
+      "paracetamol_toxicity": {
+        "symptoms": ["nausea", "RUQ pain"],
+        "investigations": ["paracetamol level", "LFTs"],
+        "treatment": ["N-acetylcysteine"]
+      },
+      "opioid_overdose": {
+        "symptoms": ["pinpoint pupils", "respiratory depression"],
+        "investigations": ["clinical"],
+        "treatment": ["naloxone"]
+      }
+    },
+  
+    "environmental": {
+      "heat_stroke": {
+        "symptoms": ["core temp > 40°C", "confusion"],
+        "investigations": ["clinical"],
+        "treatment": ["rapid cooling"]
+      },
+      "hypothermia": {
+        "symptoms": ["shivering", "slow HR"],
+        "investigations": ["core temp"],
+        "treatment": ["rewarming"]
+      }
+    },
+  
     "infectious_diseases": {
-        "covid_19": {
-            "description": "Viral disease affecting lungs and smell/taste.",
-            "symptoms": ["fever", "cough", "fatigue", "loss of smell"],
-            "investigations": ["PCR"],
-            "treatment": ["supportive care"]
-        },
-        "tuberculosis": {
-            "description": "Chronic lung infection.",
-            "symptoms": ["chronic cough", "night sweats", "weight loss"],
-            "investigations": ["CXR", "AFB"],
-            "treatment": ["RIPE therapy"]
-        },
-        "dengue": {
-            "description": "Mosquito-borne viral fever.",
-            "symptoms": ["fever", "joint pain", "rash"],
-            "investigations": ["NS1 antigen"],
-            "treatment": ["fluids"]
-        }
+      "pneumonia": {
+        "description": "Infection of lung tissue.",
+        "symptoms": ["fever", "cough", "breathlessness"],
+        "investigations": ["CXR", "CRP"],
+        "treatment": ["amoxicillin", "macrolides"]
+      },
+      "tuberculosis": {
+        "description": "Chronic Mycobacterium tuberculosis infection.",
+        "symptoms": ["chronic cough", "weight loss", "night sweats"],
+        "investigations": ["CXR", "sputum AFB"],
+        "treatment": ["RIPE therapy"]
+      },
+      "covid_19": {
+        "description": "Coronavirus respiratory infection.",
+        "symptoms": ["fever", "loss of smell", "cough"],
+        "investigations": ["PCR"],
+        "treatment": ["supportive", "oxygen", "steroids"]
+      },
+      "influenza": {
+        "description": "Seasonal viral infection.",
+        "symptoms": ["fever", "myalgia", "headache"],
+        "investigations": ["PCR"],
+        "treatment": ["oseltamivir"]
+      },
+      "meningitis": {
+        "description": "Infection of meninges.",
+        "symptoms": ["fever", "neck stiffness", "headache"],
+        "investigations": ["lumbar puncture"],
+        "treatment": ["IV antibiotics"]
+      },
+      "uti": {
+        "description": "Urinary tract infection.",
+        "symptoms": ["burning urination", "frequency"],
+        "investigations": ["urinalysis"],
+        "treatment": ["nitrofurantoin"]
+      },
+      "hepatitis_b": {
+        "description": "Viral liver infection.",
+        "symptoms": ["jaundice", "fatigue"],
+        "investigations": ["HBsAg"],
+        "treatment": ["antivirals"]
+      },
+      "hiv": {
+        "description": "Retrovirus causing immune suppression.",
+        "symptoms": ["fever", "weight loss"],
+        "investigations": ["HIV test", "CD4 count"],
+        "treatment": ["ART"]
+      },
+      "syphilis": {
+        "description": "Treponema pallidum infection.",
+        "symptoms": ["chancre", "rash"],
+        "investigations": ["RPR", "TPHA"],
+        "treatment": ["penicillin"]
+      },
+      "malaria": {
+        "description": "Mosquito-borne parasitic infection.",
+        "symptoms": ["fever", "chills"],
+        "investigations": ["blood smear"],
+        "treatment": ["ACT therapy"]
+      },
+      "dengue": {
+        "description": "Viral infection spread by Aedes mosquitoes.",
+        "symptoms": ["fever", "joint pain", "rash"],
+        "investigations": ["NS1 antigen"],
+        "treatment": ["supportive"]
+      }
     },
-
+  
+    "cardiology": {
+      "hypertension": {
+        "description": "High blood pressure.",
+        "symptoms": ["headache", "dizziness"],
+        "investigations": ["BP check", "ECG"],
+        "treatment": ["ACE inhibitors", "calcium blockers"]
+      },
+      "heart_failure": {
+        "description": "Weak pumping of heart.",
+        "symptoms": ["breathlessness", "leg swelling"],
+        "investigations": ["BNP", "echo"],
+        "treatment": ["diuretics", "ACE inhibitors"]
+      },
+      "myocardial_infarction": {
+        "description": "Heart muscle death due to ischemia.",
+        "symptoms": ["chest pain", "sweating"],
+        "investigations": ["troponin", "ECG"],
+        "treatment": ["PCI", "aspirin"]
+      }
+    },
+  
+    "respiratory": {
+      "asthma": {
+        "description": "Chronic airway inflammation.",
+        "symptoms": ["wheeze", "cough"],
+        "investigations": ["spirometry"],
+        "treatment": ["inhaled steroids", "bronchodilators"]
+      },
+      "copd": {
+        "description": "Chronic obstruction due to smoking.",
+        "symptoms": ["cough", "sputum", "breathlessness"],
+        "investigations": ["spirometry"],
+        "treatment": ["bronchodilators", "oxygen"]
+      }
+    },
+  
     "neurology": {
-        "migraine": {
-            "description": "Severe headache with nausea and light sensitivity.",
-            "symptoms": ["headache", "nausea", "light sensitivity"],
-            "investigations": ["clinical"],
-            "treatment": ["triptans"]
-        },
-        "stroke": {
-            "description": "Blocked or ruptured brain artery.",
-            "symptoms": ["weakness", "speech difficulty", "facial droop"],
-            "investigations": ["CT/MRI"],
-            "treatment": ["thrombolysis (if eligible)"]
-        }
+      "stroke": {
+        "description": "Brain blood flow blockage or bleed.",
+        "symptoms": ["weakness", "facial droop"],
+        "investigations": ["CT/MRI"],
+        "treatment": ["thrombolysis", "aspirin"]
+      },
+      "epilepsy": {
+        "description": "Recurring seizures.",
+        "symptoms": ["convulsions"],
+        "investigations": ["EEG"],
+        "treatment": ["anti-epileptics"]
+      }
+    },
+  
+    "endocrinology": {
+      "hyperthyroidism": {
+        "description": "Excess thyroid hormone.",
+        "symptoms": ["heat intolerance", "palpitations"],
+        "investigations": ["TSH/T4"],
+        "treatment": ["carbimazole"]
+      },
+      "hypothyroidism": {
+        "description": "Low thyroid hormone.",
+        "symptoms": ["fatigue", "cold intolerance"],
+        "investigations": ["TSH/T4"],
+        "treatment": ["levothyroxine"]
+      }
+    },
+  
+    "gastroenterology": {
+      "gerd": {
+        "description": "Reflux of stomach acid.",
+        "symptoms": ["heartburn"],
+        "investigations": ["endoscopy if severe"],
+        "treatment": ["PPIs"]
+      },
+      "peptic_ulcer": {
+        "description": "Ulcer of stomach/duodenum.",
+        "symptoms": ["epigastric pain"],
+        "investigations": ["endoscopy"],
+        "treatment": ["PPIs", "H. pylori treatment"]
+      }
+    },
+  
+    "hematology": {
+      "iron_deficiency_anemia": {
+        "description": "Low iron levels causing anemia.",
+        "symptoms": ["fatigue", "pale skin"],
+        "investigations": ["Hb", "ferritin"],
+        "treatment": ["iron tablets"]
+      }
+    },
+  
+    "rheumatology": {
+      "rheumatoid_arthritis": {
+        "description": "Autoimmune joint inflammation.",
+        "symptoms": ["morning stiffness"],
+        "investigations": ["RF", "anti-CCP"],
+        "treatment": ["DMARDs"]
+      }
+    },
+  
+    "dermatology": {
+      "eczema": {
+        "description": "Chronic skin inflammation.",
+        "symptoms": ["itching", "dry skin"],
+        "investigations": ["clinical"],
+        "treatment": ["steroids", "moisturizers"]
+      }
+    },
+  
+    "psychiatry": {
+      "depression": {
+        "description": "Low mood disorder.",
+        "symptoms": ["sadness", "loss of interest"],
+        "investigations": ["clinical"],
+        "treatment": ["SSRIs", "therapy"]
+      }
     }
-};
-
-
-
-
-// ==========================================================
-//     2) NATURAL LANGUAGE SYMPTOM EXTRACTOR AI
-// ==========================================================
-
-const SYMPTOM_KEYWORDS = [
-  "fever","hot","cold","shaking","chills",
-  "headache","migraine","head hurts",
-  "cough","coughing","sore throat",
-  "chest pain","chest tight","pressure","tightness",
-  "stomach pain","tummy pain","abdominal pain",
-  "nausea","vomit","vomiting",
-  "dizzy","lightheaded","spinning",
-  "weak","tired","fatigue",
-  "breathless","short breath","no air","cant breathe","wheeze",
-  "rash","itchy","burning","red spots",
-  "heart racing","palpitations","fast heartbeat",
-  "joint pain","body ache","muscle pain"
-];
-
-function extractSymptoms(text) {
-    text = text.toLowerCase();
-    let found = [];
-    SYMPTOM_KEYWORDS.forEach(sym => {
-        if (text.includes(sym)) found.push(sym);
-    });
-    if (found.length === 0) found.push(text);
-    return found;
-}
-
-
-
-// ==========================================================
-//        3) SYMPTOM VECTORIZER + COSINE SIMILARITY
-// ==========================================================
-
-// Turn symptom list into vector for similarity matching
-function toVector(symptoms) {
-    return SYMPTOM_KEYWORDS.map(key => symptoms.includes(key) ? 1 : 0);
-}
-
-// Cosine similarity function
-function cosineSimilarity(a, b) {
-    let dot = 0, magA = 0, magB = 0;
-    for (let i = 0; i < a.length; i++) {
-        dot += a[i] * b[i];
-        magA += a[i] ** 2;
-        magB += b[i] ** 2;
-    }
-    return dot / (Math.sqrt(magA) * Math.sqrt(magB) || 1);
-}
-
-
-
-// ==========================================================
-//             4) TENSORFLOW.JS AI MODEL
-// ==========================================================
-
-async function trainAIModel() {
-    const xs = [];
-    const ys = [];
-
-    const diseaseList = [];
-
-    // Convert database into AI training data
-    for (let category in medicalDB) {
-        for (let disease in medicalDB[category]) {
-            let d = medicalDB[category][disease];
-            diseaseList.push(disease);
-
-            let vec = toVector(d.symptoms.map(s => s.toLowerCase()));
-            xs.push(vec);
-
-            let label = new Array(Object.keys(medicalDB).length).fill(0);
-            ys.push(xs.length); 
-        }
-    }
-
-    const inputTensor = tf.tensor2d(xs);
-    const outputTensor = tf.tensor1d(ys, "int32");
-
-    // Build neural network
-    const model = tf.sequential();
-    model.add(tf.layers.dense({ units: 32, activation: "relu", inputShape: [SYMPTOM_KEYWORDS.length] }));
-    model.add(tf.layers.dense({ units: 16, activation: "relu" }));
-    model.add(tf.layers.dense({ units: diseaseList.length, activation: "softmax" }));
-
-    model.compile({ optimizer: "adam", loss: "sparseCategoricalCrossentropy" });
-
-    await model.fit(inputTensor, outputTensor, { epochs: 50 });
-
-    return { model, diseaseList };
-}
-
-
-
-// ==========================================================
-//             5) DOCTOR-LIKE OUTPUT BUILDER
-// ==========================================================
-
-function buildDoctorOutput(diseases, text, severity) {
-    const severityTag = severity === "red" ? "🔴 URGENT" :
-                        severity === "yellow" ? "🟡 Moderate" :
-                        "🟢 Mild";
-
-    let html = `
-        <div class="result-card">
-            <h3>Your Medical Assessment</h3>
-            <p><strong>Severity:</strong> ${severityTag}</p>
-            <p>You said: "<em>${text}</em>"</p>
-            <p>Based on your symptoms, here are the top possibilities:</p>
-        </div>
-    `;
-
-    diseases.forEach(d => {
-        html += `
-            <div class="result-card">
-                <h3>${d.name}</h3>
-                <p>${d.description}</p>
-                <p><strong>Why this matches:</strong> ${d.symptoms.join(", ")}</p>
-                <p><strong>Recommended tests:</strong> ${d.investigations.join(", ")}</p>
-                <p><strong>Treatments:</strong> ${d.treatment.join(", ")}</p>
-            </div>
-        `;
-    });
-
-    html += `
-        <div class="result-card">
-            <h3>Doctor Advice</h3>
-            <p>Please monitor your symptoms. If anything worsens, seek medical care.</p>
-        </div>
-    `;
-
-    return html;
-}
-
-
-
-// ==========================================================
-//            6) FINAL CONSULTATION EVENT
-// ==========================================================
-
-document.getElementById("searchBtn").addEventListener("click", async () => {
-
-    const text = document.getElementById("symptomInput").value.toLowerCase().trim();
-    const output = document.getElementById("output");
-
-    if (!text) {
-        output.innerHTML = `<div class="result-card">Please describe your feeling.</div>`;
-        return;
-    }
-
-    const extracted = extractSymptoms(text);
-    const inputVec = toVector(extracted);
-
-    // Train AI model if not yet trained
-    if (!window.aiModel) {
-        output.innerHTML = `<div class="result-card">Training AI model... please wait 3–5 seconds ⏳</div>`;
-        window.aiModel = await trainAIModel();
-    }
-
-    const { model, diseaseList } = window.aiModel;
-
-    const prediction = model.predict(tf.tensor2d([inputVec])).dataSync();
-    const index = prediction.indexOf(Math.max(...prediction));
-    const predictedDisease = diseaseList[index];
-
-    // Also use similarity engine
-    const similarities = [];
-
-    for (let category in medicalDB) {
-        for (let disease in medicalDB[category]) {
-            let d = medicalDB[category][disease];
-            const vec = toVector(d.symptoms.map(s => s.toLowerCase()));
-            const score = cosineSimilarity(inputVec, vec);
-
-            similarities.push({ 
-                name: disease, 
-                score, 
-                ...d 
-            });
-        }
-    }
-
-    // Sort by combined AI scoring
-    similarities.sort((a,b) => b.score - a.score);
-
-    const severity = text.includes("chest pain") || text.includes("can't breathe") ? "red" :
-                     text.includes("fever") ? "yellow" : "green";
-
-    const top3 = similarities.slice(0,3).map(x => ({
-        name: x.name.replace(/_/g," "),
-        description: x.description,
-        symptoms: x.symptoms,
-        investigations: x.investigations,
-        treatment: x.treatment
-    }));
-
-    output.innerHTML = buildDoctorOutput(top3, text, severity);
-});
-async function askAI(message) {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer YOUR_API_KEY"
-        },
-        body: JSON.stringify({
-            model: "gpt-4.1-mini",
-            messages: [
-                { role: "system", content: "You are a friendly medical assistant. You do not give diagnosis, but you explain possible causes, ask more questions, and advise when to seek a doctor." },
-                { role: "user", content: message }
-            ]
-        })
-    });
-
-    const data = await response.json();
-    return data.choices[0].message.content;
-}
-
-// handle user input
-document.getElementById("searchBtn").addEventListener("click", async () => {
-    const input = document.getElementById("symptomInput").value;
-    const output = document.getElementById("output");
-
-    output.innerHTML = "<p>Thinking...</p>";
-
-    const reply = await askAI(input);
-
-    output.innerHTML = `
-        <div class="result-card">
-            <h3>Doctor AI Response</h3>
-            <p>${reply}</p>
-        </div>
-    `;
-});
+  };
+  
+  
+  // =====================================
+  // 2) FREE-TEXT MEDICAL ANALYZER
+  // =====================================
+  
+  document.getElementById("searchBtn").addEventListener("click", () => {
+      const text = document.getElementById("symptomInput").value.toLowerCase();
+      const output = document.getElementById("output");
+  
+      if (!text.trim()) {
+          output.innerHTML = "<p>Please describe how you feel.</p>";
+          return;
+      }
+  
+      let extractedSymptoms = [];
+  
+      const symptomKeywords = [
+          "fever","headache","cough","chest pain","vomit","vomiting","dizzy","dizziness",
+          "weakness","breathlessness","shortness of breath","difficulty breathing",
+          "pain","rash","burning","fatigue","tired","nausea","sweating","shaking",
+          "cold","hot","palpitations","confusion","stiff neck","diarrhea","runny nose",
+          "sore throat","abdominal pain","stomach pain","back pain","body ache"
+      ];
+  
+      // extract symptoms from text
+      symptomKeywords.forEach(sym => {
+          if (text.includes(sym)) extractedSymptoms.push(sym);
+      });
+  
+      if (extractedSymptoms.length === 0) extractedSymptoms.push(text);
+  
+      let matchedResults = [];
+  
+      // search through database
+      for (let category in medicalDB) {
+          for (let disease in medicalDB[category]) {
+              let dis = medicalDB[category][disease];
+  
+              if (!dis.symptoms) continue;
+  
+              let matchCount = 0;
+  
+              extractedSymptoms.forEach(sym => {
+                  dis.symptoms.forEach(dsym => {
+                      if (dsym.toLowerCase().includes(sym)) matchCount++;
+                  });
+              });
+  
+              if (matchCount > 0) {
+                  matchedResults.push({
+                      name: disease.replace(/_/g, " "),
+                      score: matchCount,
+                      description: dis.description,
+                      symptoms: dis.symptoms,
+                      investigations: dis.investigations,
+                      treatment: dis.treatment
+                  });
+              }
+          }
+      }
+  
+      matchedResults.sort((a, b) => b.score - a.score);
+  
+      if (matchedResults.length === 0) {
+          output.innerHTML = "<p>No matching disease found. Try describing more symptoms.</p>";
+          return;
+      }
+  
+      output.innerHTML = matchedResults.slice(0, 3).map(r => `
+          <div class="result-card">
+              <h3>${r.name}</h3>
+              <p><strong>Description:</strong> ${r.description}</p>
+              <p><strong>Symptoms:</strong> ${r.symptoms.join(", ")}</p>
+              <p><strong>Investigations:</strong> ${r.investigations.join(", ")}</p>
+              <p><strong>Treatment:</strong> ${r.treatment.join(", ")}</p>
+          </div>
+      `).join("");
+  });
+  
