@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HOME - Content</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Logo Loading Screen (MUST be inside body) -->
+  <div id="loader" class="loader">
+    <div class="logo-wrap">
+      <img src="kkko.png" alt="HOME Logo" class="loader-logo-img" />
+      <span class="logo-text">HOME</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">
+      <img src="kkko.png" alt="HOME Logo" class="nav-logo" />
+    </div>
+
+    <h1 id="Head">HOME</h1>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- IMPORTANT: links go to index.html sections -->
+    <ul id="navLinks">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#categories">team-members</a></li>
+      <li><a href="index.html#latest">Latest</a></li>
+      <li><a href="index.html#community">Vision & Mission</a></li>
+      <li><a href="index.html#about">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- Content Page Main -->
+  <section class="container" style="padding-top: 40px;">
+    <h2 class="section-title">Content</h2>
+
+    <div class="content-grid">
+      <div class="content-card">
+        <div class="card-image">🎥</div>
+        <div class="card-body">
+          <span class="card-tag">Entertainment</span>
+          <h3 class="card-title">Nothing Here (Example)</h3>
+          <p class="card-desc">You can replace this with real posts later.</p>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="card-image">🎨</div>
+        <div class="card-body">
+          <span class="card-tag">Arts</span>
+          <h3 class="card-title">Add Your Articles</h3>
+          <p class="card-desc">Create more content cards like this.</p>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="card-image">💻</div>
+        <div class="card-body">
+          <span class="card-tag">Tech</span>
+          <h3 class="card-title">Tutorials & Tips</h3>
+          <p class="card-desc">Post coding tips, UI design, and more.</p>
+          <a href="#" class="read-more">Read More →</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 10px;">
+      <a href="index.html" class="read-more">← Back to Home</a>
+    </div>
+  </section>
+
+  <footer id="about">
+    <h3>HOME - Youth Content Community</h3>
+    <p>Building a safe, inclusive space for youth to create, learn, and grow together.</p>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">YouTube</a>
+      <a href="#">Discord</a>
+    </div>
+    <p class="copyright">© 2025 HOME. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,71 +1,169 @@
-// Logo loading animation control
+// =====================================
+// SAFE LOADER (works only if #loader exists)
+// =====================================
 document.body.classList.add("loading");
 
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
+  if (!loader) {
+    document.body.classList.remove("loading");
+    return;
+  }
 
   setTimeout(() => {
     loader.classList.add("hide");
     document.body.classList.remove("loading");
-
-    // remove loader completely
     setTimeout(() => loader.remove(), 900);
-  }, 1000); // logo display time
+  }, 1000);
 });
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute("href"));
-    if (target) target.scrollIntoView({ behavior: "smooth" });
-  });
-});
 
-// Team members data structure
-const teamMembers = [
-  {
-    name: "Pyae Hein Kyaw",
-    role: "Founder",
-    image: "https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/a7423660-1b3b-4d53-890b-39db85efc38c"
-  },
-  {
-    name: "Kaung Khant Ko",
-    role: "Support Engineer",
-    image: "https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/02c2dbd2-4507-476c-9083-28ed555abb99"
-  },
-  {
-    name: "Phone Kyaw Myat",
-    role: "Customer Success Manager",
-    image: "https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/16f3a3ce-5fdd-48d4-aa4c-e8784e8df13a"
-  },
-  {
-    name: "Si Thu Min San",
-    role: "Head of Research & Insights",
-    image: ""
+// =====================================
+// RUN AFTER DOM IS READY
+// =====================================
+document.addEventListener("DOMContentLoaded", () => {
+
+  // =====================================
+  // TYPEWRITER (only if #typing-text exists)
+  // =====================================
+  const textElement = document.getElementById("typing-text");
+  if (textElement) {
+    const texts = [
+      "Welcome to HOME",
+      "Space for youth ",
+      "Create. Connect. Inspire."
+    ];
+
+    let textIndex = 0;
+    let index = 0;
+    let isDeleting = false;
+
+    const typingSpeed = 120;
+    const deletingSpeed = 70;
+    const pauseAfterTyping = 1200;
+    const pauseAfterDeleting = 600;
+
+    function typeLoop() {
+      const text = texts[textIndex];
+
+      if (!isDeleting) {
+        textElement.textContent = text.slice(0, index + 1);
+        index++;
+
+        if (index === text.length) {
+          setTimeout(() => (isDeleting = true), pauseAfterTyping);
+        }
+      } else {
+        textElement.textContent = text.slice(0, index - 1);
+        index--;
+
+        if (index === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          setTimeout(() => {}, pauseAfterDeleting);
+        }
+      }
+
+      setTimeout(typeLoop, isDeleting ? deletingSpeed : typingSpeed);
+    }
+
+    typeLoop();
   }
-];
 
-// Function to render team members
-function renderTeamMembers() {
-  const teamContainer = document.getElementById("team-members");
-  if (!teamContainer) return;
 
-  teamContainer.innerHTML = "";
+  // =====================================
+  // SMOOTH SCROLL (only for same-page #links)
+  // =====================================
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      const href = this.getAttribute("href");
+      if (!href || href === "#") return;
 
-  teamMembers.forEach(member => {
-    const memberCard = document.createElement("div");
-    memberCard.className = "category-card";
-    memberCard.innerHTML = `
-      <img src="${member.image}" alt="${member.name}" class="team-photo">
-      <div class="team-info">
-        <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: var(--color-dark);">${member.name}</h3>
-        <p style="margin: 0; font-size: 13px; color: var(--color-secondary); font-weight: 600;">${member.role}</p>
-      </div>
-    `;
-    teamContainer.appendChild(memberCard);
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
   });
-}
 
-// Initial render
-renderTeamMembers();
+
+  // =====================================
+  // TEAM MEMBERS (only if #team-members exists)
+  // =====================================
+  const teamMembers = [
+    { name: "Pyae Hein Kyaw", role: "Founder", image: "team/photo_2025-12-15 1.16.12 AM.jpeg" },
+    { name: "Kaung Khant Ko", role: "IT support", image: "team/IMG_0943.jpg" },
+    { name: "Phone Kyaw Myat", role: "Author", image: "team/photo_2025-12-15 9.25.31 AM.jpeg" },
+    { name: "Si Thu Min San", role: "Author", image: "team/IMG_0939.JPG" },
+    { name: "Aung Nay Myo Khant", role: "Author", image: "team/photo_2025-12-15 9.25.29 AM.jpeg" },
+    { name: "Lwin Moe Naung", role: "Author", image: "team/photo_2025-12-15 9.30.27 AM.jpeg" },
+
+  ];
+
+  function renderTeamMembers() {
+    const teamContainer = document.getElementById("team-members");
+    if (!teamContainer) return;
+
+    teamContainer.innerHTML = "";
+
+    teamMembers.forEach((member) => {
+      const memberCard = document.createElement("div");
+      memberCard.className = "category-card";
+      memberCard.innerHTML = `
+        <img src="${member.image}" alt="${member.name}" class="team-photo">
+        <div class="team-info">
+          <h3 style="margin: 0 0 8px 0; font-size: 18px; font-weight: 600; color: var(--color-dark);">
+            ${member.name}
+          </h3>
+          <p style="margin: 0; font-size: 13px; color: var(--color-secondary); font-weight: 600;">
+            ${member.role}
+          </p>
+        </div>
+      `;
+      teamContainer.appendChild(memberCard);
+    });
+  }
+
+  renderTeamMembers();
+
+
+  // =====================================
+  // MOBILE MENU (THIS FIXES YOUR PROBLEM)
+  // =====================================
+  const menuBtn = document.getElementById("menuBtn");
+  const navLinks = document.getElementById("navLinks");
+
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    // Close if user taps outside menu
+    document.addEventListener("click", (e) => {
+      const clickedInside = navLinks.contains(e.target) || menuBtn.contains(e.target);
+      if (!clickedInside) {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Close on resize to desktop
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+});
