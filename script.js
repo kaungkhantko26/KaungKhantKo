@@ -92,12 +92,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // TEAM MEMBERS (only if #team-members exists)
   // =====================================
   const teamMembers = [
-    { name: "Pyae Hein Kyaw", role: "Founder", image: "team/photo_2025-12-15 1.16.12 AM.jpeg" },
+    { name: "Pyae Hein Kyaw", role: "Founder", image: "team/IMG_3019.jpg" },
     { name: "Kaung Khant Ko", role: "IT support", image: "team/IMG_0943.jpg" },
-    { name: "Phone Kyaw Myat", role: "Author", image: "team/photo_2025-12-15 9.25.31 AM.jpeg" },
+    { name: "Phone Kyaw Myat", role: "Author", image: "team/IMG_3023.jpg" },
     { name: "Si Thu Min San", role: "Author", image: "team/IMG_0939.JPG" },
-    { name: "Aung Nay Myo Khant", role: "Author", image: "team/photo_2025-12-15 9.25.29 AM.jpeg" },
-    { name: "Lwin Moe Naung", role: "Author", image: "team/photo_2025-12-15 9.30.27 AM.jpeg" },
+    { name: "Aung Nay Myo Khant", role: "Author", image: "team/IMG_3024.jpg" },
+    { name: "Lwin Moe Naung", role: "Author", image: "team/IMG_3025.jpg" },
 
   ];
 
